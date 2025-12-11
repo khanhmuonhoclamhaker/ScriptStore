@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptStore | Premium Script Store By Shozon</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. CONFIGURATION & RESET --- */
+        :root {
+            --bg-color: #030712; /* Deepest Charcoal */
+            --card-bg: #111827;
+            --primary: #6366f1;  /* Indigo */
+            --accent: #10b981;   /* Emerald */
+            --telegram: #0ea5e9; /* Sky Blue */
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --spotlight-color: rgba(255, 255, 255, 0.15);
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            /* Noise Texture */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+
+        /* --- 2. GLASS NAVBAR --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(3, 7, 18, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .brand:hover {
+            transform: scale(1.05);
+        }
+
+        .brand span { color: var(--primary); }
+        .brand i { font-size: 1.2rem; color: var(--accent); }
+
+        .btn-telegram {
+            background: rgba(14, 165, 233, 0.1);
+            color: var(--telegram);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-telegram::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-telegram:hover::before {
+            left: 100%;
+        }
+        
+        .btn-telegram:hover {
+            background: var(--telegram);
+            color: white;
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* --- 3. LAYOUT & CONTAINERS --- */
+        .page-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 20px 50px 20px; /* Top padding creates space for fixed nav */
+        }
+
+        .section-label {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-label::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.2), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
+
+        /* --- 4. SPOTLIGHT CARD DESIGN --- */
+        .spotlight-card {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 45% 55%;
+            margin-bottom: 60px; /* Space between products */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .spotlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* The glowing border effect */
+        .spotlight-card::before {
+            content: "";
+            position: absolute;
+            height: 100%; width: 100%;
+            top: 0; left: 0;
+            background: radial-gradient(
+                800px circle at var(--mouse-x) var(--mouse-y), 
+                rgba(255, 255, 255, 0.06), 
+                transparent 40%
+            );
+            z-index: 1; /* Above bg, below content */
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .spotlight-card:hover::before { opacity: 1; }
+
+        /* The glowing border specific line */
+        .spotlight-card::after {
+            content: "";
+            position: absolute;
+            height: 100%; width: 100%;
+            top: 0; left: 0;
+            background: radial-gradient(
+                600px circle at var(--mouse-x) var(--mouse-y), 
+                var(--primary), 
+                transparent 40%
+            );
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .card-content-wrapper {
+            position: relative;
+            z-index: 2; /* Keeps content clickable */
+            background: var(--card-bg); /* Covers the ::after glow, leaving only border */
+            width: calc(100% - 2px); 
+            height: calc(100% - 2px);
+            margin: 1px;
+            border-radius: 23px;
+            display: grid;
+            grid-template-columns: 45% 55%;
+            overflow: hidden;
+        }
+
+        .reverse .card-content-wrapper { direction: rtl; }
+        .reverse .card-content-wrapper > * { direction: ltr; }
+
+        /* --- 5. IMAGE SLIDER SIDE --- */
+        .visual-side {
+            position: relative;
+            background: #000;
+            min-height: 450px;
+            border-right: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        .reverse .visual-side { border-right: none; border-left: 1px solid var(--border-color); }
+
+        .slide {
+            position: absolute; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0; transition: opacity 0.6s ease;
+        }
+        .slide.active { opacity: 1; }
+
+        .slider-nav {
+            position: absolute; bottom: 20px; right: 20px;
+            display: flex; gap: 8px; z-index: 5;
+        }
+        .nav-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: rgba(255,255,255,0.3); cursor: pointer;
+            transition: 0.3s;
+        }
+        .nav-dot.active { background: white; transform: scale(1.2); }
+
+        /* Floating Badges */
+        .tech-stack {
+            position: absolute; top: 20px; left: 20px;
+            display: flex; gap: 8px; flex-wrap: wrap; z-index: 5;
+        }
+        .chip {
+            font-size: 0.7rem; font-weight: 700;
+            padding: 6px 12px; border-radius: 6px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white; text-transform: uppercase;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .chip:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .chip.laravel { background: rgba(240, 82, 82, 0.2); border-color: #f05252; }
+        .chip.hot { background: rgba(245, 158, 11, 0.2); border-color: #f59e0b; }
+
+        /* --- 6. INFO SIDE --- */
+        .info-side { padding: 3rem; display: flex; flex-direction: column; }
+
+        .product-head { margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; }
+        .product-head h2 { font-size: 2rem; font-weight: 800; color: white; margin-bottom: 0.5rem; transition: color 0.3s ease; }
+        .product-head:hover h2 { color: var(--primary); }
+        .product-head p { color: var(--text-muted); font-size: 0.95rem; }
+
+        .features-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2.5rem;
+        }
+        .f-col h4 { font-size: 0.9rem; color: var(--primary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .f-col ul { list-style: none; }
+        .f-col li {
+            margin-bottom: 0.8rem; color: var(--text-muted); font-size: 0.9rem;
+            display: flex; align-items: flex-start; gap: 10px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .f-col li:hover {
+            transform: translateX(5px);
+            color: var(--text-main);
+        }
+        .f-col li i { color: var(--accent); margin-top: 4px; }
+
+        .bn-font { font-family: 'Hind Siliguri', sans-serif; font-size: 1rem !important; }
+
+        /* Buttons */
+        .actions { display: flex; gap: 15px; margin-top: auto; }
+        
+        .btn-buy {
+            flex: 1; text-align: center; padding: 1rem;
+            background: linear-gradient(135deg, var(--telegram) 0%, #0284c7 100%);
+            color: white; font-weight: 700; border-radius: 12px;
+            text-decoration: none; position: relative; overflow: hidden;
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.3);
+            transition: transform 0.2s, box-shadow 0.3s ease;
+        }
+        .btn-buy:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 7px 25px rgba(14, 165, 233, 0.4);
+        }
+        .btn-buy::before {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shine 3s infinite;
+        }
+
+        .btn-view {
+            padding: 1rem 1.5rem; border: 1px solid var(--border-color);
+            border-radius: 12px; color: white; text-decoration: none;
+            font-weight: 600; transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-view::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: rgba(255,255,255,0.05);
+            transition: width 0.3s ease;
+        }
+        .btn-view:hover::before {
+            width: 100%;
+        }
+        .btn-view:hover { 
+            background: rgba(255,255,255,0.05); 
+            border-color: white;
+            transform: translateY(-2px);
+        }
+
+        @keyframes shine { 100% { left: 100%; } }
+
+        /* --- 7. FOOTER --- */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px; text-align: center;
+            background: #020617;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: footerGlow 3s infinite;
+        }
+        
+        @keyframes footerGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        .footer-cta { color: var(--text-muted); margin-bottom: 15px; }
+        
+        /* --- PREMIUM ANIMATIONS --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* --- DECORATIVE ELEMENTS --- */
+        .decorative-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--gradient-1);
+            top: -150px;
+            right: -150px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--gradient-2);
+            bottom: -100px;
+            left: -100px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+        
+        .circle-3 {
+            width: 250px;
+            height: 250px;
+            background: var(--gradient-3);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        /* --- LOADING ANIMATION --- */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* --- SCROLL TO TOP BUTTON --- */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+            z-index: 1000;
+        }
+        
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            background: var(--accent);
+        }
+
+        /* --- ANIMATION ON SCROLL --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- MOBILE RESPONSIVE (up to 768px) --- */
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.75rem 4%;
+            }
+            
+            .brand {
+                font-size: 1.2rem;
+            }
+            
+            .btn-telegram {
+                padding: 0.4rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .page-wrapper {
+                padding: 100px 15px 40px 15px;
+            }
+            
+            .section-label {
+                font-size: 0.7rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .spotlight-card {
+                grid-template-columns: 1fr;
+                margin-bottom: 30px;
+            }
+            
+            .card-content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .visual-side {
+                min-height: 200px;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .reverse .visual-side {
+                border-left: none;
+            }
+            
+            .info-side {
+                padding: 1.5rem;
+            }
+            
+            .product-head h2 {
+                font-size: 1.5rem;
+            }
+            
+            .product-head p {
+                font-size: 0.85rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .f-col h4 {
+                font-size: 0.8rem;
+            }
+            
+            .f-col li {
+                font-size: 0.85rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn-buy {
+                padding: 0.9rem;
+            }
+            
+            .btn-view {
+                padding: 0.9rem;
+                text-align: center;
+            }
+            
+            .reverse .card-content-wrapper {
+                direction: ltr;
+            }
+            
+            .tech-stack {
+                top: 15px;
+                left: 15px;
+            }
+            
+            .chip {
+                font-size: 0.6rem;
+                padding: 4px 8px;
+            }
+            
+            .slider-nav {
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .nav-dot {
+                width: 8px;
+                height: 8px;
+            }
+            
+            footer {
+                padding: 30px 20px;
+            }
+            
+            .scroll-top {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 1rem;
+            }
+        }
+
+        /* --- TABLET RESPONSIVE (769px to 1024px) --- */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            nav {
+                padding: 0.875rem 4.5%;
+            }
+            
+            .brand {
+                font-size: 1.35rem;
+            }
+            
+            .btn-telegram {
+                padding: 0.45rem 1.1rem;
+                font-size: 0.85rem;
+            }
+            
+            .page-wrapper {
+                padding: 110px 20px 45px 20px;
+            }
+            
+            .section-label {
+                font-size: 0.75rem;
+                margin-bottom: 1.75rem;
+            }
+            
+            .spotlight-card {
+                grid-template-columns: 1fr;
+                margin-bottom: 40px;
+            }
+            
+            .card-content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .visual-side {
+                min-height: 280px;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .reverse .visual-side {
+                border-left: none;
+            }
+            
+            .info-side {
+                padding: 2rem;
+            }
+            
+            .product-head h2 {
+                font-size: 1.75rem;
+            }
+            
+            .product-head p {
+                font-size: 0.9rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.75rem;
+            }
+            
+            .f-col h4 {
+                font-size: 0.85rem;
+            }
+            
+            .f-col li {
+                font-size: 0.875rem;
+            }
+            
+            .actions {
+                gap: 12px;
+            }
+            
+            .btn-buy {
+                padding: 0.95rem;
+            }
+            
+            .btn-view {
+                padding: 0.95rem 1.25rem;
+            }
+            
+            .reverse .card-content-wrapper {
+                direction: ltr;
+            }
+            
+            .tech-stack {
+                top: 18px;
+                left: 18px;
+            }
+            
+            .chip {
+                font-size: 0.65rem;
+                padding: 5px 10px;
+            }
+            
+            .slider-nav {
+                bottom: 18px;
+                right: 18px;
+            }
+            
+            .nav-dot {
+                width: 9px;
+                height: 9px;
+            }
+            
+            footer {
+                padding: 35px;
+            }
+            
+            .scroll-top {
+                width: 48px;
+                height: 48px;
+                bottom: 25px;
+                right: 25px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* --- DESKTOP RESPONSIVE (1025px and above) --- */
+        @media (min-width: 1025px) {
+            nav {
+                padding: 1rem 5%;
+            }
+            
+            .brand {
+                font-size: 1.5rem;
+            }
+            
+            .btn-telegram {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .page-wrapper {
+                padding: 120px 30px 50px 30px;
+            }
+            
+            .section-label {
+                font-size: 0.8rem;
+                margin-bottom: 2rem;
+            }
+            
+            .spotlight-card {
+                grid-template-columns: 45% 55%;
+                margin-bottom: 60px;
+            }
+            
+            .card-content-wrapper {
+                grid-template-columns: 45% 55%;
+            }
+            
+            .visual-side {
+                min-height: 450px;
+                border-right: 1px solid var(--border-color);
+                border-bottom: none;
+            }
+            
+            .reverse .visual-side {
+                border-right: none;
+                border-left: 1px solid var(--border-color);
+            }
+            
+            .info-side {
+                padding: 3rem;
+            }
+            
+            .product-head h2 {
+                font-size: 2rem;
+            }
+            
+            .product-head p {
+                font-size: 0.95rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+            
+            .f-col h4 {
+                font-size: 0.9rem;
+            }
+            
+            .f-col li {
+                font-size: 0.9rem;
+            }
+            
+            .actions {
+                gap: 15px;
+            }
+            
+            .btn-buy {
+                padding: 1rem;
+            }
+            
+            .btn-view {
+                padding: 1rem 1.5rem;
+            }
+            
+            .reverse .card-content-wrapper {
+                direction: rtl;
+            }
+            
+            .reverse .card-content-wrapper > * {
+                direction: ltr;
+            }
+            
+            .tech-stack {
+                top: 20px;
+                left: 20px;
+            }
+            
+            .chip {
+                font-size: 0.7rem;
+                padding: 6px 12px;
+            }
+            
+            .slider-nav {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .nav-dot {
+                width: 10px;
+                height: 10px;
+            }
+            
+            footer {
+                padding: 40px;
+            }
+            
+            .scroll-top {
+                width: 50px;
+                height: 50px;
+                bottom: 30px;
+                right: 30px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* --- LARGE DESKTOP (1400px and above) --- */
+        @media (min-width: 1400px) {
+            .page-wrapper {
+                max-width: 1400px;
+                padding: 120px 40px 50px 40px;
+            }
+            
+            .spotlight-card {
+                grid-template-columns: 40% 60%;
+            }
+            
+            .card-content-wrapper {
+                grid-template-columns: 40% 60%;
+            }
+            
+            .info-side {
+                padding: 4rem;
+            }
+            
+            .product-head h2 {
+                font-size: 2.5rem;
+            }
+            
+            .features-grid {
+                gap: 3rem;
+            }
+            
+            .visual-side {
+                min-height: 500px;
+            }
+        }
+
+        /* --- TOUCH DEVICE OPTIMIZATIONS --- */
+        @media (hover: none) and (pointer: coarse) {
+            .spotlight-card:hover {
+                transform: none;
+            }
+            
+            .spotlight-card:active {
+                transform: scale(0.98);
+            }
+            
+            .btn-telegram:active {
+                transform: scale(0.95);
+            }
+            
+            .btn-buy:active {
+                transform: scale(0.98);
+            }
+            
+            .btn-view:active {
+                transform: scale(0.98);
+            }
+            
+            .chip:active {
+                transform: scale(0.95);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Decorative Elements -->
+    <div class="decorative-circle circle-1"></div>
+    <div class="decorative-circle circle-2"></div>
+    <div class="decorative-circle circle-3"></div>
+
+    <nav>
+        <div class="brand">
+            <i class="fas fa-code"></i>
+            <div>Shozon<span>Roy</span></div>
+        </div>
+        <a href="https://t.me/shozonroy2" target="_blank" class="btn-telegram">
+            <i class="fab fa-telegram-plane"></i> Contact Me
+        </a>
+    </nav>
+
+    <div class="page-wrapper">
+
+        <div class="section-label fade-in">Latest Scripts</div>
+
+        <div class="spotlight-card fade-in" onmousemove="handleMouseMove(event)">
+            <div class="card-content-wrapper">
+                
+                <div class="visual-side">
+                    <div class="tech-stack">
+                        <span class="chip laravel">Laravel</span>
+                        <span class="chip">PHP 7.4</span>
+                        <span class="chip">Auto-API</span>
+                    </div>
+                    <div id="slider1" class="slider-container">
+                        <img src="https://images.unsplash.com/photo-1640955014216-75201cd0c9f4?auto=format&fit=crop&w=800&q=80" class="slide active">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" class="slide">
+                    </div>
+                    <div class="slider-nav">
+                        <div class="nav-dot active" onclick="setSlide('slider1', 0)"></div>
+                        <div class="nav-dot" onclick="setSlide('slider1', 1)"></div>
+                    </div>
+                </div>
+
+                <div class="info-side">
+                    <div class="product-head">
+                        <h2>Free Fire Games Topup Website / Script</h2>
+                        <p>PHP - Laraval TopUp Website </p>
+                        <p>Frontend : Html, CSS & Js
+                        <br />
+                        Backend : Framework Laraval</p>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="f-col">
+                            <h4>Website Features</h4>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i>Auto TopUp System</li>
+                                <li><i class="fas fa-check-circle"></i>Auto UniPin System</li>
+                                <li><i class="fas fa-check-circle"></i>Auto Payment System</li>
+                                <li><i class="fas fa-check-circle"></i>Super Fast & Smooth</li>
+                                <li><i class="fas fa-check-circle"></i>Payment Statis</li>
+                                <li><i class="fas fa-check-circle"></i>Search SEO Friendly</li>
+                                <li><i class="fas fa-check-circle"></i>Uid Checker System</li>
+                                <li><i class="fas fa-check-circle"></i>Order Notification Bot</li>
+                                <li><i class="fas fa-check-circle"></i>Order Delivery Massage</li>
+                                <li><i class="fas fa-check-circle"></i>Latest Orders System</li>
+                                <li><i class="fas fa-check-circle"></i>User Manage System</li>
+                                <li><i class="fas fa-check-circle"></i>Variation Manage System</li>
+                                <li><i class="fas fa-check-circle"></i>Unlimited Product System</li>
+                                <li><i class="fas fa-check-circle"></i>Unlimited Category System</li>
+                                <li><i class="fas fa-check-circle"></i>All Control From Admin Panel</li>
+                           
+                            </ul>
+                        </div>
+                <!--        <div class="f-col">
+                            <h4>Premium Extras</h4>
+                            <ul>
+                                <li><i class="fas fa-bolt"></i> Telegram Bot Notification</li>
+                                <li><i class="fas fa-bolt"></i> Unlimited Category System</li>
+                                <li><i class="fas fa-bolt"></i> Payment Statistics</li>
+                                <li><i class="fas fa-bolt"></i> 5 Latest Order View</li>
+                            </ul>
+                        </div>
+                    </div> -->
+
+                    <div class="actions">
+                        <a href="https://t.me/shozonroy2" class="btn-view">Demo</a>
+                        <a href="https://t.me/shozonroy2" target="_blank" class="btn-buy">
+                            Buy Script Now <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="spotlight-card reverse fade-in" onmousemove="handleMouseMove(event)">
+            <div class="card-content-wrapper">
+                
+                <div class="visual-side">
+                    <div class="tech-stack">
+                        <span class="chip hot">Best Seller</span>
+                        <span class="chip">Server Copy</span>
+                    </div>
+                    <div id="slider2" class="slider-container">
+                        <img src="https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?auto=format&fit=crop&w=800&q=80" class="slide active">
+                        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80" class="slide">
+                    </div>
+                    <div class="slider-nav">
+                        <div class="nav-dot active" onclick="setSlide('slider2', 0)"></div>
+                        <div class="nav-dot" onclick="setSlide('slider2', 1)"></div>
+                    </div>
+                </div>
+
+                <div class="info-side">
+                    <div class="product-head">
+                        <h2>NID Server Copy Website / Script</h2>
+                        <p class="bn-font">🔥🔥 আকর্ষণীয় ছাড়ে এনআইডি কার্ডের সার্ভার কপি ওয়েবসাইট এবং স্কিপ্ট 🔥🔥</p>
+                      <p>PHP - Laraval </p>
+                        <p>Frontend : Html, CSS & Js
+                        <br />
+                        Backend : Framework Laraval</p>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="f-col">
+                            <h4>Website Features</h4>
+                            <ul class="bn-font">
+                                <li><i class="fas fa-check-circle"></i>সাইন কপি থেকে আইডি</li>
+                                <li><i class="fas fa-check-circle"></i>জন্ম নিবন্ধন মেক</li>
+                                <li><i class="fas fa-check-circle"></i>সার্ভার কপি মেক</li>
+                                <li><i class="fas fa-check-circle"></i>টিন সনদ মেক</li>
+                                <li><i class="fas fa-check-circle"></i>বায়োমেট্রিক</li>
+                                <li><i class="fas fa-check-circle"></i>সাইন কপি</li>
+                                <li><i class="fas fa-check-circle"></i>এনআইডি পিডিএফ</li>
+                                <li><i class="fas fa-check-circle"></i>কল তালিকা</li>
+                                <li><i class="fas fa-check-circle"></i>নাম্বার টু লোকেশন</li>
+                                <li><i class="fas fa-check-circle"></i>এনআইডি থেকে সব নাম্বার</li>
+                                <li><i class="fas fa-check-circle"></i>বিকাশ তথ্য / নগদ তথ্য / রকেট তথ্য</li>
+                                <li><i class="fas fa-check-circle"></i>আইএমইআই থেকে সক্রিয় নাম্বার</li>
+                               
+                            </ul>
+                        </div>
+                         <!--       <div class="f-col">
+                            <h4>Admin & API</h4>
+                            <ul class="bn-font">
+                                <li><i class="fas fa-server"></i> ৫/ অল সিম বায়োমেট্রিক তথ্য</li>
+                                <li><i class="fas fa-file-alt"></i> ৬/ টিন সার্টিফিকেট</li>
+                                <li><i class="fas fa-headset"></i> ২৪ ঘন্টা সাপোর্ট</li>
+                                <li><i class="fas fa-money-bill-wave"></i> Bkash/Nogod/Rocket</li>
+                            </ul>
+                        </div>
+                    </div>
+-->
+                    <div class="actions">
+                        <a href="https://t.me/shozonroy2" class="btn-view">Demo</a>
+                        <a href="https://t.me/shozonroy2" target="_blank" class="btn-buy">
+                            Buy Script Now <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p class="footer-cta">⚠️ For Buy Script message me ❤️‍</p>
+        <a href="https://t.me/shozonroy2" class="btn-telegram" style="display:inline-flex; width:auto;">
+            <i class="fab fa-telegram"></i> @shozonroy2
+        </a>
+        <p style="margin-top:20px; font-size:0.8rem; color: #555;">© 2025 ShozonRoy</p>
+    </footer>
+    
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // 1. Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            }, 1000);
+        });
+        
+        // 2. Scroll Animations
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.fade-in');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementBottom = element.getBoundingClientRect().bottom;
+                
+                if (elementTop < window.innerHeight && elementBottom > 0) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', handleScrollAnimation);
+        window.addEventListener('load', handleScrollAnimation);
+        
+        // 3. Scroll to Top
+        const scrollTopButton = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollTopButton.classList.add('visible');
+            } else {
+                scrollTopButton.classList.remove('visible');
+            }
+        });
+        
+        scrollTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 4. Spotlight Effect Logic (only for non-touch devices)
+        function handleMouseMove(e) {
+            const card = e.currentTarget;
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Set CSS variables for the gradient position
+            card.style.setProperty("--mouse-x", `${x}px`);
+            card.style.setProperty("--mouse-y", `${y}px`);
+        }
+        
+        // Disable spotlight effect on touch devices
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.spotlight-card').forEach(card => {
+                card.removeAttribute('onmousemove');
+            });
+        }
+
+        // 5. Slider Logic
+        function setSlide(sliderId, index) {
+            const container = document.getElementById(sliderId);
+            const slides = container.getElementsByClassName('slide');
+            const dots = container.nextElementSibling.getElementsByClassName('nav-dot');
+
+            // Reset all
+            for(let i=0; i<slides.length; i++) {
+                slides[i].classList.remove('active');
+                if(dots[i]) dots[i].classList.remove('active');
+            }
+
+            // Set active
+            if(slides[index]) slides[index].classList.add('active');
+            if(dots[index]) dots[index].classList.add('active');
+        }
+
+        // Auto rotate sliders every 4 seconds
+        setInterval(() => {
+            // Logic to toggle between 0 and 1 for demo purposes
+            const sliders = ['slider1', 'slider2'];
+            sliders.forEach(id => {
+                const container = document.getElementById(id);
+                const current = container.querySelector('.slide.active');
+                const nextIndex = current.nextElementSibling ? 1 : 0;
+                setSlide(id, nextIndex);
+            });
+        }, 4000);
+        
+        // 6. Touch optimizations
+        if ('ontouchstart' in window) {
+            // Add touch feedback
+            document.querySelectorAll('a, button, .nav-dot, .chip').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.opacity = '0.7';
+                });
+                element.addEventListener('touchend', function() {
+                    this.style.opacity = '1';
+                });
+            });
+        }
+    </script>
+</body>
+</html>
