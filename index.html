@@ -909,6 +909,30 @@
                 transform: scale(0.95);
             }
         }
+
+        /* CTA Button Styles */
+        .cta-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--telegram-blue);
+            color: #ffffff;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: 1px solid #00ff8b ;
+        }
+
+        .cta-button:hover {
+            background-color: #0077b3;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -935,8 +959,16 @@
 
     <div class="page-wrapper">
 
-        <div class="section-label fade-in">Latest Scripts</div>
+        <div class="container">
+        <!-- Contact Admin Button -->
+        <div class="cta-container">
+            <a href="https://shozon-roy.github.io/ScriptStore/freefirecontrol.html" target="_blank" class="cta-button">
+           ফ্রি ফায়ার ডায়মন্ড টপআপ: ওয়েবসাইট এবং অ্যাডমিনের কাজ পদ্ধতি
+            </a>
+            
+        </div>
 
+        <div class="section-label fade-in">Latest Scripts</div>
         <div class="spotlight-card fade-in" onmousemove="handleMouseMove(event)">
             <div class="card-content-wrapper">
                 
